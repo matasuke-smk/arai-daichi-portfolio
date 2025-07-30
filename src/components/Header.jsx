@@ -19,11 +19,11 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map(item => item.path.substring(1)) // # を除去
-      const scrollPosition = window.scrollY + 100 // ヘッダー高さ分のオフセット
+      const scrollPosition = window.scrollY + 120 // ヘッダー高さ分のオフセット
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i])
-        if (section && section.offsetTop <= scrollPosition) {
+        if (section && section.offsetTop - 80 <= scrollPosition) {
           setActiveSection(`#${sections[i]}`)
           break
         }
@@ -47,9 +47,12 @@ const Header = () => {
     if (path.startsWith('#')) {
       const element = document.getElementById(path.substring(1))
       if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
+        const headerHeight = 80 // ヘッダーの高さ + 余白
+        const elementPosition = element.offsetTop - headerHeight
+        
+        window.scrollTo({
+          top: elementPosition,
+          behavior: 'smooth'
         })
       }
     }

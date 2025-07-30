@@ -178,8 +178,32 @@ const Home = () => {
           </ScrollReveal>
           <ScrollReveal delay={600}>
             <div className="space-x-4">
-              <a href="#gallery" className="btn-primary">作品を見る</a>
-              <a href="#contact" className="btn-secondary">お問い合わせ</a>
+              <button 
+                onClick={() => {
+                  const element = document.getElementById('gallery')
+                  if (element) {
+                    const headerHeight = 80
+                    const elementPosition = element.offsetTop - headerHeight
+                    window.scrollTo({ top: elementPosition, behavior: 'smooth' })
+                  }
+                }}
+                className="btn-primary"
+              >
+                作品を見る
+              </button>
+              <button 
+                onClick={() => {
+                  const element = document.getElementById('contact')
+                  if (element) {
+                    const headerHeight = 80
+                    const elementPosition = element.offsetTop - headerHeight
+                    window.scrollTo({ top: elementPosition, behavior: 'smooth' })
+                  }
+                }}
+                className="btn-secondary"
+              >
+                お問い合わせ
+              </button>
             </div>
           </ScrollReveal>
         </ScrollReveal>
@@ -420,13 +444,23 @@ const Home = () => {
                     ))}
                   </ul>
 
-                  <a href="#contact" className={`block text-center w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
-                    plan.popular 
-                      ? 'bg-primary-600 hover:bg-primary-700 text-white transform hover:scale-105' 
-                      : 'border-2 border-primary-600 text-primary-400 hover:bg-primary-600 hover:text-white'
-                  }`}>
+                  <button 
+                    onClick={() => {
+                      const element = document.getElementById('contact')
+                      if (element) {
+                        const headerHeight = 80
+                        const elementPosition = element.offsetTop - headerHeight
+                        window.scrollTo({ top: elementPosition, behavior: 'smooth' })
+                      }
+                    }}
+                    className={`block text-center w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
+                      plan.popular 
+                        ? 'bg-primary-600 hover:bg-primary-700 text-white transform hover:scale-105' 
+                        : 'border-2 border-primary-600 text-primary-400 hover:bg-primary-600 hover:text-white'
+                    }`}
+                  >
                     相談する
-                  </a>
+                  </button>
                 </div>
               </ScrollReveal>
             ))}
