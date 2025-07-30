@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import ScrollReveal from '../components/ScrollReveal'
 import ParallaxSection from '../components/ParallaxSection'
 import SEOHead from '../components/SEOHead'
 import ImageModal from '../components/ImageModal'
+import { smoothScrollTo } from '../utils/scrollUtils'
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null)
@@ -179,27 +179,13 @@ const Home = () => {
           <ScrollReveal delay={600}>
             <div className="space-x-4">
               <button 
-                onClick={() => {
-                  const element = document.getElementById('gallery')
-                  if (element) {
-                    const headerHeight = 80
-                    const elementPosition = element.offsetTop - headerHeight
-                    window.scrollTo({ top: elementPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => smoothScrollTo('gallery')}
                 className="btn-primary"
               >
                 作品を見る
               </button>
               <button 
-                onClick={() => {
-                  const element = document.getElementById('contact')
-                  if (element) {
-                    const headerHeight = 80
-                    const elementPosition = element.offsetTop - headerHeight
-                    window.scrollTo({ top: elementPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => smoothScrollTo('contact')}
                 className="btn-secondary"
               >
                 お問い合わせ
@@ -445,14 +431,7 @@ const Home = () => {
                   </ul>
 
                   <button 
-                    onClick={() => {
-                      const element = document.getElementById('contact')
-                      if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
-                        window.scrollTo({ top: elementPosition, behavior: 'smooth' })
-                      }
-                    }}
+                    onClick={() => smoothScrollTo('contact')}
                     className={`block text-center w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
                       plan.popular 
                         ? 'bg-primary-600 hover:bg-primary-700 text-white transform hover:scale-105' 

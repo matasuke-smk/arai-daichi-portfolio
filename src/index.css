@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* ヘッダー高さ + 余白 */
   }
   
   body {

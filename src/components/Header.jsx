@@ -1,33 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { smoothScrollTo, getActiveSection } from '../utils/scrollUtils'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('#home')
-  const location = useLocation()
+  const [activeSection, setActiveSection] = useState('home')
 
   const navItems = [
-    { path: '#home', label: 'ホーム' },
-    { path: '#services', label: 'サービス' },
-    { path: '#profile', label: 'プロフィール' },
-    { path: '#gallery', label: '作品ギャラリー' },
-    { path: '#pricing', label: '料金表' },
-    { path: '#contact', label: 'お問い合わせ' },
+    { id: 'home', label: 'ホーム' },
+    { id: 'services', label: 'サービス' },
+    { id: 'profile', label: 'プロフィール' },
+    { id: 'gallery', label: '作品ギャラリー' },
+    { id: 'pricing', label: '料金表' },
+    { id: 'contact', label: 'お問い合わせ' },
   ]
 
   // スクロール位置に基づいてアクティブセクションを更新
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => item.path.substring(1)) // # を除去
-      const scrollPosition = window.scrollY + 120 // ヘッダー高さ分のオフセット
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i])
-        if (section && section.offsetTop - 80 <= scrollPosition) {
-          setActiveSection(`#${sections[i]}`)
-          break
-        }
-      }
+      const sections = navItems.map(item => item.id)
+      const currentSection = getActiveSection(sections)
+      setActiveSection(currentSection)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -36,26 +28,8 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const isActive = (path) => {
-    if (location.pathname === '/') {
-      return activeSection === path
-    }
-    return location.pathname === path
-  }
-
-  const handleClick = (path) => {
-    if (path.startsWith('#')) {
-      const element = document.getElementById(path.substring(1))
-      if (element) {
-        const headerHeight = 80 // ヘッダーの高さ + 余白
-        const elementPosition = element.offsetTop - headerHeight
-        
-        window.scrollTo({
-          top: elementPosition,
-          behavior: 'smooth'
-        })
-      }
-    }
+  const handleClick = (sectionId) => {
+    smoothScrollTo(sectionId)
     setIsMenuOpen(false)
   }
 
@@ -64,31 +38,24 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
-            <a href="#home" className="text-2xl font-bold text-primary-400 hover:text-primary-300 transition-colors">
+            <button 
+              onClick={() => handleClick('home')}
+              className="text-2xl font-bold text-primary-400 hover:text-primary-300 transition-colors"
+            >
               Arai Daichi
-            </a>
+            </button>
           </div>
 
           <nav className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
-                item.path.startsWith('#') ? (
-                  <button
-                    key={item.path}
-                    onClick={() => handleClick(item.path)}
-                    className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
-                  >
-                    {item.label}
-                  </button>
-                ) : (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
-                  >
-                    {item.label}
-                  </Link>
-                )
+                <button
+                  key={item.id}
+                  onClick={() => handleClick(item.id)}
+                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                >
+                  {item.label}
+                </button>
               ))}
             </div>
           </nav>
@@ -113,24 +80,13 @@ const Header = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-dark-800 border-t border-dark-700">
               {navItems.map((item) => (
-                item.path.startsWith('#') ? (
-                  <button
-                    key={item.path}
-                    onClick={() => handleClick(item.path)}
-                    className={`block nav-link w-full text-left ${isActive(item.path) ? 'active' : ''}`}
-                  >
-                    {item.label}
-                  </button>
-                ) : (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`block nav-link ${isActive(item.path) ? 'active' : ''}`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                )
+                <button
+                  key={item.id}
+                  onClick={() => handleClick(item.id)}
+                  className={`block nav-link w-full text-left ${activeSection === item.id ? 'active' : ''}`}
+                >
+                  {item.label}
+                </button>
               ))}
             </div>
           </div>
