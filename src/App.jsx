@@ -5,9 +5,12 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 
 function App() {
+  // GitHub Pagesの場合はベースパスを設定、ローカル開発では '/'
+  const basename = import.meta.env.DEV ? '/' : '/arai-daichi-portfolio'
+  
   return (
     <HelmetProvider>
-      <Router>
+      <Router basename={basename}>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
