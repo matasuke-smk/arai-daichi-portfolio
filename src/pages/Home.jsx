@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ScrollReveal from '../components/ScrollReveal'
-import ParallaxSection from '../components/ParallaxSection'
 import SEOHead from '../components/SEOHead'
 import ImageModal from '../components/ImageModal'
 import { smoothScrollTo } from '../utils/scrollUtils'
@@ -202,7 +201,7 @@ const Home = () => {
       </section>
 
       {/* サービスセクション */}
-      <ParallaxSection id="services" speed={0.3} className="py-20 px-4">
+      <section id="services" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <h2 className="section-title">特徴的なサービス</h2>
@@ -251,7 +250,7 @@ const Home = () => {
             </ScrollReveal>
           </div>
         </div>
-      </ParallaxSection>
+      </section>
 
       {/* プロフィールセクション */}
       <section id="profile" className="py-20 px-4 bg-dark-800">

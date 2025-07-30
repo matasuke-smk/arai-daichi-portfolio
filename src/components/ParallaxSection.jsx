@@ -4,7 +4,8 @@ const ParallaxSection = ({
   children, 
   speed = 0.5, 
   className = '',
-  backgroundImage = null 
+  backgroundImage = null,
+  id = null
 }) => {
   const [offset, setOffset] = useState(0)
   const ref = useRef()
@@ -42,6 +43,7 @@ const ParallaxSection = ({
   return (
     <div 
       ref={ref} 
+      id={id}
       className={`relative overflow-hidden ${className}`}
       style={backgroundStyle}
     >
